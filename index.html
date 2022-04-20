@@ -1,0 +1,503 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>현대자동차 - 캐스퍼 소개홈페이지(스크롤 레이아웃)</title>
+  <!-- 초기화 -->
+  <link rel="stylesheet" href="./css/reset.css" type="text/css">
+  <!-- 공통서식 -->
+  <link rel="stylesheet" href="./css/base.css" type="text/css">
+  <!-- 레이아웃 서식 -->
+  <link rel="stylesheet" href="./css/layout.css">
+  <!-- 메인서식 -->
+  <link rel="stylesheet" href="./css/main.css" type="text/css">
+  <!-- 폰트어썸 주소 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <!-- css3 접두사 자동으로 생성키셔주는 스크립트 -->
+  <script src="./script/prefixfree.min.js"></script>
+  <!-- 제이쿼리 -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!--제이쿼리 쿠키파일-->
+  <script src="./script/jquery.cookie.js"></script>
+  <!--제이쿼리 슬라이드-->
+  <link rel="stylesheet" href="./css/swiper.css" type="text/css">
+  <!--제이쿼리 슬라이드 스크립트-->
+  <script src="./script/swiper.js"></script>
+  <style>
+    
+
+      .mySwiper .swiper-slide {
+        text-align: center;
+        width: 33% !important;
+        height: 679px;
+
+        /* Center slide text vertically */
+       
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+
+      .mySwiper .swiper-slide img {
+        display: block;
+        width: 480px;
+      }
+  </style>
+  <script>
+    $(document).ready(function(){
+
+      //1. 사용자가 마우스를 헤더에 올리면 '글자색, 배경색' 변경하기
+
+
+      //2. 사용자가 마우스를 헤더에 바깥으로 빼면 '글자색, 배경색' 없애기
+
+      $('header').hover(function(){
+        $(this).addClass('h_on');
+        $(this).find('.gnb a').addClass('on');
+        $(this).find('i.fas').addClass('on');
+        $(this).find('h1 img').attr('src','./images/logo-casper.png')
+
+      }, function(){
+        $(this).removeClass('h_on');
+        $('.gnb a').removeClass('on');
+        $('header i.fas').removeClass('on');
+        $('h1 img').attr('src','./images/logo-casper-white.028f418.png')
+      });
+
+      //모달창 띄우기
+      let modal = '<div class="modal"><img src="./images/pc_prod_notice_20211210.jpg"><p><input type="checkbox" id="ch"><label for="ch">오늘 하루 창 열지 않기</label><input type="button" value="닫기" id="c_btn"></a></p></div>';
+
+      //body태그의 안쪽으로 맨 뒤쪽에 모달내용 출력하기
+      $('body').append(modal);
+
+      /*
+      제이쿼리 쿠키 사용법
+      $.cookie('쿠키이름', '쿠키값', {expires:만료일, path:'저장경로'});
+      */
+
+      //1. 사용자의 브라우저에 쿠키값이 none일때
+      if($.cookie('popup')=='none'){
+        $('.modal').hide();
+      }
+
+      let $ex = $('.modal #ch'); //체크박스 변수선언하기
+
+      //사용자가 체크박스에 체크를 했는지 안했는지 확인하는 함수
+      function closeModal(){
+        if($ex.is(':checked')){ //체크박스에 체크가 된 경우
+          $.cookie('popup', 'none', {expires:1, path:'/'}); //쿠키파일 생성하고
+        }
+        $('.modal').hide(); //팝업 숨김
+      }
+
+      //체크하지 않고 그냥 닫기를 누르는 경우
+      $('#c_btn').click(function(){
+        closeModal();
+      });
+
+      //메인내비게이션 마우스 오버시 가로길이 늘리기
+      let m_nav = $('#m_nav > ul > li');
+
+      m_nav.hover(function(){
+        $(this).addClass('act');
+      },function(){
+        $(this).removeClass('act');
+      });
+
+      $(window).scroll(function(){
+
+        let sPos = $(this).scrollTop();
+        console.log(sPos);
+
+        if(sPos >=900){
+          $('header').addClass('h_on');
+          $('header').find('.gnb a').addClass('on');
+          $('header').find('i.fas').addClass('on');
+          $('header').find('h1 img').attr('src','./images/logo-casper.png');
+
+          $('header').mouseleave(function(){ //마우스 아웃시 동작
+            $(this).find('i.fas').addClass('on');
+            $(this).find('.gnb a').addClass('on');
+            //검정색로고
+            $(this).find('h1 img').attr('src','./images/logo-casper.png');
+            $(this).addClass('h_on');
+          });
+
+        }else{
+          $('header').removeClass('h_on');
+          $('.gnb a').removeClass('on');
+          $('header i.fas').removeClass('on');
+          $('h1 img').attr('src','./images/logo-casper-white.028f418.png');
+
+          $('header').mouseleave(function(){ //마우스 아웃시 동작
+            $(this).find('i.fas').removeClass('on');
+            $(this).find('.gnb a').removeClass('on');
+            //검정색로고
+            $(this).find('h1 img').attr('src','./images/logo-casper-white.028f418.png');
+            $(this).removeClass('h_on');
+          });
+        }
+      });
+
+      /*마우스오버 이펙트*/
+      $(".hover").mouseleave(
+        function () {
+          $(this).removeClass("hover");
+          });
+  
+
+    });
+  </script>
+</head>
+<body>
+  <!-- 헤더영역 시작 -->
+  <header>
+    <h1>
+      <a href="index.html" title="캐스퍼 메인으로 바로가기"><img src="./images/logo-casper-white.028f418.png" alt="캐스퍼 로고">
+      </a>
+    </h1>
+
+    <nav>
+      <ul class="gnb">
+        <li><a href="#intro" title="소개" class="arctic_scroll">소개</a></li>
+        <li><a href="#test_drive" title="체험" class="arctic_scroll">체험</a></li>
+        <li><a href="#event" title="이벤트" class="arctic_scroll">이벤트</a></li>
+        <li><a href="#buy_info" title="구매" class="arctic_scroll">구매</a></li>
+        <li><a href="#customer" title="고객지원" class="arctic_scroll">고객지원</a></li>
+      </ul>
+    </nav>
+    <i class="fas fa-user"></i>
+    <i class="fas fa-bell"></i> <!--알림 아이콘-->
+  </header>
+
+  <nav id="m_nav">
+    <ul>
+      <li><span class="num">1</span><a href="#intro" title="소개" class="arctic_scroll">소개</a></li>
+      <li><span class="num">2</span><a href="#test_drive" title="체험" class="arctic_scroll">체험</a></li>
+      <li><span class="num">3</span><a href="#event" title="이벤트" class="arctic_scroll">이벤트</a></li>
+      <li><span class="num">4</span><a href="#buy_info" title="구매" class="arctic_scroll">구매</a></li>
+      <li><span class="num">5</span><a href="#customer" title="고객지원" class="arctic_scroll">고객지원</a></li>
+    </ul>
+  </nav>
+  <!-- 콘텐츠영역 시작 -->
+  <main>
+    <section id="movie">
+      <div class="m_info">
+        <h2>CASPER</h2>
+        <p>오직 캐스퍼 온라인에서만 구매하실 수 있습니다.</p>
+        <a href="https://casper.hyundai.com/vehicles/making/model" title="나만의 캐스퍼 만들기">나만의 캐스퍼 만들기</a>
+        <a href="https://casper.hyundai.com/vehicles/benefit" title="구매 혜택보기">구매 혜택보기</a>
+        <a href="https://casper.hyundai.com/vehicles/highlight" title="자세히 보기">자세히 보기</a>
+      </div>
+
+      <video muted autoplay loop='infinite'>
+        <source src="./images/main_KV.webm" type="video/webm">
+      </video>
+      <a href="#top3" title="다음페이지로 이동" class="arctic_scroll" id="next_btn">아래로 이동</a>
+    </section>
+
+    <section id="top3">
+      <div class="title">
+        <h2>가장 많이 찾은 캐스퍼 Top3</h2>
+        <p>지금 가장 인기 있는 조합을 확인해보세요.</p>
+      </div>
+
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="order">
+              <em>3위</em>
+              <strong class="tit">캐스퍼 가솔린 1.0 인스퍼레이션</strong>
+            </div>
+            <img src="./images/m.png" alt="카키">
+            <div class="btn_p"><a href="https://casper.hyundai.com/vehicles/making/model" alt="견적내기">견적내기</a></div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="order">
+              <em>1위</em>
+              <strong class="tit">캐스퍼 가솔린 1.0 스마트</strong>
+            </div>
+            <img src="./images/m.png" alt="카키">
+            <div class="btn_p"><a href="https://casper.hyundai.com/vehicles/making/model" alt="견적내기">견적내기</a></div>
+          </div>
+
+          <div class="swiper-slide">
+            <div class="order">
+              <em>2위</em>
+              <strong class="tit">캐스퍼 가솔린 1.0 인스퍼레이션</strong>
+            </div>
+            <img src="./images/m.png"  alt="카키">
+            <div class="btn_p"><a href="https://casper.hyundai.com/vehicles/making/model" alt="견적내기">견적내기</a></div>
+          </div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <script>
+        var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 3,
+        spaceBetween: 10,
+        slidesPerGroup: 1,
+        loop: true,
+        loopFillGroupWithBlank: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+      </script>
+
+    </section>
+
+    <section id="intro">
+      <div class="title">
+        <h2>구매 혜택</h2>
+        <p>다양한 혜택으로 캐스퍼를 구매해보세요.</p>
+      </div>
+      
+      <div class="con">
+        <ul class="box">
+          <li class="cares">
+            <span class="tag">혜택 1</span>
+            <strong class="tit">CASPER 케어스</strong>
+            <P>캐스퍼 구매 고객을 위한 <br> 카라이프 안심 케어 서비스</P>
+            <a href="#" class="btn_bl"><span>자세히보기</span></a>
+          </li>
+          <li class="tax">
+            <span class="tag">혜택 1</span>
+            <strong class="tit">세제혜택</strong>
+            <P>면세 혜택부터 유지비 할인까지<br> 가능한 엔트리 SUV 캐스퍼</P>
+            <a href="#" class="btn_bl"><span>자세히보기</span></a>
+          </li>
+          <li class="blue">
+            <span class="tag">혜택 1</span>
+            <strong class="tit">블루멤버스 혜택</strong>
+            <P>신차 구매 시 포인트 3% 적립,<br>8년간 8회 무상점검까지</P>
+            <a href="#" class="btn_bl"><span>자세히보기</span></a>
+          </li>
+          <li class="tinted">
+            <span class="tag">혜택 1</span>
+            <strong class="tit">썬팅 무료 시공</strong>
+            <P>구매고객 대상 썬팅 쿠폰/<br>브랜드 키트 제공</P>
+            <a href="#" class="btn_bl"><span>자세히보기</span></a>
+          </li>
+        </ul>
+      </div>
+
+    </section>
+
+    <section id="test_drive">
+      <div class="title">
+        <h2>캐스퍼 구매 안내</h2>
+        <p>온라인 구매 단계를 쉽게 안내해드립니다.</p>
+        <a href="#" class="btn_bl"><span>자세히보기</span></a>
+      </div>
+      <div class="movie_casper">
+        <img src="./images/casper_movie.png" alt="캐스퍼영상가이드">
+      </div>
+      <ol>
+        <li class="step1">
+          <span>1단계</span>
+          <a href="#" class="btn_bl">
+          <span>견적</span></a>
+        </li>
+        <li class="step2">
+          <span>2단계</span>
+          <a href="#" class="btn_bl">
+          <span>계약</span></a>
+        </li>
+        <li class="step3">
+          <span>3단계</span>
+          <a href="#" class="btn_bl">
+          <span>차량 준비</span></a>
+        </li>
+        <li class="step4">
+          <span>4단계</span>
+          <a href="#" class="btn_bl">
+          <span>결제</span></a>
+        </li>
+        <li class="step5">
+          <span>5단계</span>
+          <a href="#" class="btn_bl">
+          <span>인수</span></a>
+        </li>
+        <li class="step6">
+          <span>6단계</span>
+          <a href="#" class="btn_bl">
+          <span>등록</span></a>
+        </li>
+      </ol>
+    </section>
+
+    <section id="event">
+      <div class="title">
+        <h2>이벤트 & 프로모션</h2>
+        <p>다양한 이벤트 & 프로모션과 함께 캐스퍼를 만나보세요.</p>
+      </div>
+      <!--슬라이드 코드시작-->
+    <div class="swiper-container event_slide">
+      <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="./images/event_banner_pc.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="./images/event_banner_pc03.jpg" alt=""></div>
+          <div class="swiper-slide"><img src="./images/event_banner_car_insurance.jpg" alt=""></div>
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination2"></div>
+  </div>    
+
+  <script>
+      var swiper = new Swiper(".event_slide", {
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
+      navigation: {
+        nextEl: ".event_slide .swiper-button-next",
+        prevEl: ".event_slide .swiper-button-prev",
+      },
+      pagination: {
+        el: ".swiper-pagination2",
+      },
+    });
+  </script>
+    </section>
+
+    <section id="buy_info">
+      <div class="title">
+        <h2>맞춤 추천</h2>
+        <p>라이프스타일에 어울리는 캐스퍼를 추천해 드립니다.</p>
+      </div>
+
+      <div class="reco">
+        <ul>
+          <li>
+            <div class="box">
+              <figure class="img_box">
+                <img src="./images/recommend-banner3.2eb3e3a.jpg" alt="여가생활" style="vertical-align: bottom">
+                <figcaption>
+                  <h3><span class="big">17,320,000</span><span class="small">원 부터</span></h3>
+                  <p>캐스퍼 가솔린 1.0 모던<br>17인치알로이휠 패키지컴포트디자인 플러스스토리지</p>
+                </figcaption>
+                <a href="#"></a>
+              </figure>
+              <div class="explain">
+                <strong class="title">여가 생활을 함께할 개성적인 첫 차를 찾는다면</strong>
+                  <p>주말 오후, 나만의 개성을 담은 차를 타고 여행을 떠나는 로망을 가지고 있다면 이 조합을 추천해요. 17인치 알로이휠과 프로젝션 헤드램프 등 디자인 디테일을 살리면서 SUV의 완성인 루프랙까지! 운전석과 동승석까지 풀 폴딩되어 차박, 차크닉을 즐기기에도 공간이 충분해요. 1열의 활용도를 높일 수 있는 동승석 시트백 보드를 추가하여 나만의 라이프 스타일에 맞는 공간을 꾸며보세요.</p>
+                  <a href="#" class="btn_bl"><span>여가를 함께할 개성적인 캐스퍼 만들기</span></a>
+              </div> 
+            </div> 
+          </li>
+
+          <li>
+            <div class="box">
+              <figure class="img_box">
+                <img src="./images/recommend-banner1.e297e2d.jpg" alt="여가생활" style="vertical-align: bottom">
+                <figcaption>
+                  <h3><span class="big">18,280,000</span><span class="small">원 부터</span></h3>
+                  <p>캐스퍼 가솔린 1.0 터보 모던<br>멀티미디어 내비 플러스캐스퍼 액티브 Ⅰ</p>
+                </figcaption>
+                <a href="#"></a>
+              </figure>
+            <div class="explain">
+              <strong class="title">안심할 수 있는 세컨카를 찾는다면</strong>
+                <p>자녀 통학용, 출퇴근용으로 믿을 수 있는 세컨카를 찾고 있는 분들에게 추천하는 조합이에요. 기본 탑재된 현대 스마트센스 덕분에 자녀의 통학길에도 안심할 수 있고, 8인치 내비게이션, 후방모니터, 하이패스 시스템 등 첨단/편의 사양은 출퇴근길의 만족감을 더욱 높여줄 거예요. 가솔린 1.0 터보 엔진으로 여유로운 가속 성능까지 누려보세요!</p>
+                <a href="#" class="btn_bl"><span>우리 가족을 위한 캐스퍼 만들기</span></a>
+            </div> 
+          </li>
+
+          <li>
+            <figure class="img_box">
+              <img src="./images/recommend-banner2.3a46da3.jpg" alt="여가생활" style="vertical-align: bottom">
+              <figcaption>
+                <h3><span class="big">16,320,000</span><span class="small">원 부터</span></h3>
+                <p>캐스퍼 가솔린 1.0 터보 스마트<br>에센셜 플러스캐스퍼 액티브 Ⅰ</p>
+              </figcaption>
+              <a href="#"></a>
+            </figure>
+            <div class="explain">
+              <strong class="title">합리적인 가격에 운전의 재미까지 느끼고 싶다면</strong>
+                <p>합리적인 가격에 주행 성능까지 놓치고 싶지 않다면 주목하세요! 가솔린 1.0 터보 엔진으로 주행의 재미를 더하고 터보 전용 외장 패키지로 단단하고 강인한 디자인의 캐스퍼를 만날 수 있어요. 기본 탑재된 현대 스마트센스로 운전자의 안전은 물론, 8인치 내비게이션과 스마트키 등 첨단/편의 사양까지! 메인카로서도 손색이 없는 합리적인 조합을 추천해요.</p>
+                <a href="#" class="btn_bl"><span>톡톡 튀는 캐스퍼 만들기</span></a>
+            </div> 
+          </li>
+        </ul>
+      </div>
+
+    </section>
+    <section id="main_banner">
+      <ul>
+        <li><a href="#" title="배너1"><img src="./images/main_banner_end.jpg" alt="">
+        <li><a href="#" title="배너1"><img src="./images/main-banner_end2.jpg" alt="">
+        </a></li>
+      </ul>
+    </section>
+
+    <div class="notice_bg">
+      <div class="notice_box">
+        <a href="#" title="공지사항" class="title">공지사항</a>
+        <div class="notice_ex">사업자등록번호 휴폐업 조회 서비스 일시 중단 안내</div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 푸터영역 시작 -->
+  <footer>
+    <div class="footer">
+      <div class="footer-wrap">
+        <div class="footer_con">
+          <div class="logo">
+            <span class="offscreen">HYUNDAI</span>
+          </div>
+          <div class="menu">
+            <ul class="guide">
+              <li><a href="#" title="이용약관">이용약관</a></li>
+              <li><a href="#" title="이용약관">개인정보 처리방침</a></li>
+              <li><a href="#" title="이용약관">저작권안내</a></li>
+              <li><a href="#" title="이용약관">공동인증서 안내</a></li>
+              <li><a href="#" title="이용약관">현대자동차 홈페이지</a></li>
+            </ul>
+            <ul class="footer_info">
+              <li>사업자등록번호 : 101-81-09147</li>
+              <li>통신판매업신고번호 : 2002-01546</li>
+              <li>대표이사 : 장재훈</li>
+              <li>캐스퍼 고객센터 : 080-500-6000</li>
+              <li>주소 : 서울시 서초구 헌릉로 12</li>
+              <li>호스팅서비스 제공 : 현대오토에버(주)</li>
+            </ul>
+            <p class="copy">COPYRIGHT ⓒ HYUNDAI MOTOR COMPANY, ALL RIGHTS RESERVED.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  
+  <script src="./script/swiper.js"></script>
+  <script src="./script/jquery.arctic_scroll.js"></script>
+  <script>
+    $(function(){
+        $(".arctic_scroll").arctic_scroll({
+            speed: 800
+        });
+    });
+  </script>
+
+</body>
+</html>

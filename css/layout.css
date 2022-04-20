@@ -1,0 +1,78 @@
+@charset "utf-8";
+
+header{
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 70px;
+  z-index: 100;
+  transition: 0.3s;
+}
+header h1{
+  padding:24px 0px 0px 2%;
+}
+header i.fas{
+  position: absolute;top: 24px;
+  font-size: 1.6rem;
+  color: #fff;
+  cursor: pointer;
+}
+header i.fa-user{right: 4%;}
+header i.fa-bell{right: 2%;}
+
+/* 내비게이션 서식 */
+header nav{
+  margin: -24px auto 0px auto;
+  width: 600px;
+}
+header .gnb{
+  display: flex;
+  justify-content: space-around;
+}
+header .gnb a{
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+
+main{
+  overflow: hidden;
+  clear: both;
+}
+
+#movie{
+  /*height: 936px;*/
+  height: 100vh; /* vertical hight 디바이스 높이에 따라 맞춰줌.*/
+  background-color: #ccc;
+  overflow: hidden;
+}
+
+#top3{
+  height: 1077px;
+
+}
+
+#intro{
+  height: 793px;
+  background: #f4f4f4;
+  padding: 110px 0 120px;
+  box-sizing: border-box;
+}
+
+#test_drive{
+  height: 1100px;
+  padding: 110px 0 120px;
+}
+
+#event{
+  height: 760px;
+  background-color: #f4f4f4;
+  padding: 110px 0 120px;
+  box-sizing: border-box;
+}
+
+#buy_info{
+  height: 947px;
+  padding: 110px 0 120px;
+  box-sizing: border-box;
+}
